@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Splitwise.SplitwiseDB;
 
 namespace Splitwise.Migrations
 {
     [DbContext(typeof(SplitwiseDbContext))]
-    partial class SplitwiseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180823122132_DeleteFlag")]
+    partial class DeleteFlag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,23 +29,13 @@ namespace Splitwise.Migrations
 
                     b.Property<DateTime>("A_Date");
 
-                    b.Property<bool>("A_Deleted");
-
                     b.Property<string>("A_Description");
 
                     b.Property<int>("A_DoneBy");
 
-                    b.Property<int?>("A_ForFriend");
-
-                    b.Property<int?>("A_ForGroup");
-
                     b.HasKey("A_Id");
 
                     b.HasIndex("A_DoneBy");
-
-                    b.HasIndex("A_ForFriend");
-
-                    b.HasIndex("A_ForGroup");
 
                     b.ToTable("Activity");
                 });
@@ -96,16 +88,12 @@ namespace Splitwise.Migrations
 
                     b.Property<DateTime>("Gb_DateTime");
 
-                    b.Property<bool>("Gb_Deleted");
-
                     b.Property<int>("Gb_ForGroup");
 
                     b.Property<string>("Gb_Name")
                         .IsRequired();
 
                     b.Property<int>("Gb_PaidBy");
-
-                    b.Property<bool>("Gb_Settled");
 
                     b.HasKey("Gb_Id");
 
@@ -188,14 +176,10 @@ namespace Splitwise.Migrations
 
                     b.Property<DateTime>("Ib_DateTime");
 
-                    b.Property<bool>("Ib_Deleted");
-
                     b.Property<string>("Ib_Name")
                         .IsRequired();
 
                     b.Property<int>("Ib_PaidBy");
-
-                    b.Property<bool>("Ib_settled");
 
                     b.HasKey("Ib_Id");
 
@@ -213,8 +197,6 @@ namespace Splitwise.Migrations
                     b.Property<double>("It_Amount");
 
                     b.Property<int>("It_BillId");
-
-                    b.Property<bool>("It_Delete");
 
                     b.Property<int>("It_PaidBy");
 
@@ -252,8 +234,6 @@ namespace Splitwise.Migrations
                     b.Property<double>("T_Amount");
 
                     b.Property<DateTime>("T_DateTime");
-
-                    b.Property<bool>("T_Deleted");
 
                     b.Property<int>("T_PaidBy");
 
@@ -300,14 +280,6 @@ namespace Splitwise.Migrations
                         .WithMany("Activities")
                         .HasForeignKey("A_DoneBy")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Splitwise.Models.Users")
-                        .WithMany("Activity")
-                        .HasForeignKey("A_ForFriend");
-
-                    b.HasOne("Splitwise.Models.Groups")
-                        .WithMany("Activity")
-                        .HasForeignKey("A_ForGroup");
                 });
 
             modelBuilder.Entity("Splitwise.Models.BillMember", b =>

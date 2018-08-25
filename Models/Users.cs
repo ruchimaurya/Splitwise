@@ -20,10 +20,15 @@ namespace Splitwise.Models
         [Required]
         public string U_Email { get; set; }
 
-        public int U_Contact { get; set; }
+        public double U_Contact { get; set; }
+
+        public bool U_Deleted { get; set; }
 
         [ForeignKey("G_Admin")]
         public virtual ICollection<Groups> Group { get; set; }
+
+        [ForeignKey("A_ForFriend")]
+        public virtual ICollection<Activity> Activity { get; set; }
 
         [ForeignKey("I_Sender")]
         public virtual ICollection<Invitation> Invitations { get; set; }
@@ -54,6 +59,8 @@ namespace Splitwise.Models
 
         [ForeignKey("It_PaidBy")]
         public virtual ICollection<IndividualTransaction> IndividualTransactions { get; set; }
-                
+        
+        [ForeignKey("T_ReceivedByFriend")]
+        public virtual ICollection<Transactions> Transactions { get; set; }
     }
 }

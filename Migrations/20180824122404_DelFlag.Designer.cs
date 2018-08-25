@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Splitwise.SplitwiseDB;
 
 namespace Splitwise.Migrations
 {
     [DbContext(typeof(SplitwiseDbContext))]
-    partial class SplitwiseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180824122404_DelFlag")]
+    partial class DelFlag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

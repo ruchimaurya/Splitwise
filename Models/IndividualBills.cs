@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,7 +17,13 @@ namespace Splitwise.Models
 
         public int Ib_PaidBy { get; set; }
 
-        public int Ib_Amount { get; set; }
+        public double Ib_Amount { get; set; }
+
+        public DateTime Ib_DateTime { get; set; }
+
+        public bool Ib_settled { get; set; }
+
+        public bool Ib_Deleted { get; set; }
 
         [ForeignKey("Bm_BillId")]
         public virtual ICollection<BillMember> BillMembers { get; set; }

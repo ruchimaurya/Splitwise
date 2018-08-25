@@ -15,7 +15,13 @@ namespace Splitwise.Models
 
         public string A_Description { get; set; }
 
+        public int? A_ForFriend { get; set; }
+
+        public int? A_ForGroup { get; set; }
+
         public DateTime A_Date { get; set; }
+
+        public bool A_Deleted { get; set; }
 
     }
 }

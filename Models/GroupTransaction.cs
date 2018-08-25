@@ -13,7 +13,7 @@ namespace Splitwise.Models
 
         public int Gt_ReceivedBy { get; set; }
 
-        public int Gt_Amount { get; set; }
+        public double Gt_Amount { get; set; }
 
     }
 }

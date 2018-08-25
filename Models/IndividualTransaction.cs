@@ -13,6 +13,8 @@ namespace Splitwise.Models
 
         public int It_PaidBy { get; set; }
 
-        public int It_Amount { get; set; }
+        public double It_Amount { get; set; }
+
+        public bool It_Delete { get; set; }
     }
 }

@@ -20,6 +20,14 @@ namespace Splitwise.Models
 
         public DateTime G_Date{ get; set; }
 
+        public bool G_Deleted { get; set; }
+        
+        [ForeignKey("T_ReceivedByGroup")]
+        public virtual ICollection<Transactions> Transactions { get; set; }
+
+        [ForeignKey("A_ForGroup")]
+        public virtual ICollection<Activity> Activity { get; set; }
+
         [ForeignKey("GM_GroupId")]
         public virtual ICollection<GroupMembers> GroupMembers { get; set; }
 

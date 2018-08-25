@@ -13,7 +13,6 @@ namespace Splitwise.Models
 
         [Required]
         public string I_Email { get; set; }
-
-        public int I_Contact { get; set; }
+                
     }
 }

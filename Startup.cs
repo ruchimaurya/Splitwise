@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Splitwise.Repository;
 using Splitwise.SplitwiseDB;
 
 namespace Splitwise
@@ -24,6 +26,12 @@ namespace Splitwise
         {
             services.AddDbContext<SplitwiseDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
+            services.AddScoped<IFriendRepository, FriendRepository>();
+            services.AddScoped<IGroupBillRepository, GroupBillRepository>();
+            services.AddScoped<IIndividualBillRepository, IndividualBillRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

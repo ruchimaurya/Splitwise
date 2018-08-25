@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Splitwise.SplitwiseDB;
 
 namespace Splitwise.Migrations
 {
     [DbContext(typeof(SplitwiseDbContext))]
-    partial class SplitwiseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180824100013_AllowNullFk")]
+    partial class AllowNullFk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,8 +28,6 @@ namespace Splitwise.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("A_Date");
-
-                    b.Property<bool>("A_Deleted");
 
                     b.Property<string>("A_Description");
 
@@ -95,8 +95,6 @@ namespace Splitwise.Migrations
                     b.Property<double>("Gb_Amount");
 
                     b.Property<DateTime>("Gb_DateTime");
-
-                    b.Property<bool>("Gb_Deleted");
 
                     b.Property<int>("Gb_ForGroup");
 
@@ -188,8 +186,6 @@ namespace Splitwise.Migrations
 
                     b.Property<DateTime>("Ib_DateTime");
 
-                    b.Property<bool>("Ib_Deleted");
-
                     b.Property<string>("Ib_Name")
                         .IsRequired();
 
@@ -213,8 +209,6 @@ namespace Splitwise.Migrations
                     b.Property<double>("It_Amount");
 
                     b.Property<int>("It_BillId");
-
-                    b.Property<bool>("It_Delete");
 
                     b.Property<int>("It_PaidBy");
 
@@ -252,8 +246,6 @@ namespace Splitwise.Migrations
                     b.Property<double>("T_Amount");
 
                     b.Property<DateTime>("T_DateTime");
-
-                    b.Property<bool>("T_Deleted");
 
                     b.Property<int>("T_PaidBy");
 

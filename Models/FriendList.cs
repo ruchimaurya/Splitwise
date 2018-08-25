@@ -8,6 +8,8 @@ namespace Splitwise.Models
     public class FriendList
     {
         [Key]
+        public int Fl_Id { get; set; }
+
         [Required]
         public int User_Id { get; set; }
 
