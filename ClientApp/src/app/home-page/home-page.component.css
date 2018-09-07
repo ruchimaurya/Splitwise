@@ -1,0 +1,86 @@
+html{
+  height:100%;
+}
+body{
+  min-height:100%;
+}
+.navbar{
+  background-color:#2B193D;
+}
+
+#title-tag{
+  font-family:'Times New Roman', Times, serif;
+  letter-spacing:10px;
+  padding:15px 100px;
+  color: white;
+  font-size:20px;
+}
+
+.nav-menu{
+  background-color:#D8D5DB;
+  min-height:100vh;  
+}
+
+.nav-body{
+   background-color:#E2E0E4;
+   min-height:100vh;
+   z-index:10;
+}
+
+#logout-btn{
+  background-color:#514260;
+  color:white;
+  float: right;
+  margin: 7px 5%;
+}
+
+.bill{
+     background: #D8D5DB;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.hdr{
+   background-color:#2B193D;
+   color: white;
+  font-size:20px;
+}
+
+ .add-bill ,.grp-set{
+    background-color:#514260;
+   color: white;
+  font-size:15px;
+ }
+
+ .error{
+   color:red;
+ }
+
+ .set-amount{
+   width:50%;
+   margin:0 auto;
+   font-size: 30px;
+    height: 50px;
+ }
+
+ .b-name{
+   background-color:#C5C0CA;
+   border:dashed 1px #514260;
+   color:#2B193D;
+   font-size:16px;
+ }
+ .set-mem{
+   width:100%;
+   font-size:16px;
+   text-align:center;
+ }
+ .fa-chevron-left{
+    font-size: 30px;
+    position: fixed;
+    margin: 10px 50px;
+ }
+ .fa-chevron-right{
+    font-size: 30px;
+    position: fixed;   
+    margin: -40px 310px;
+ }

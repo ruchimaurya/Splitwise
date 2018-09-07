@@ -1,0 +1,52 @@
+<body *ngIf="trans&&friend">
+  <div class="row" style="display: flex; background-color: #E2E0E4;">
+    <div class="col-sm-9 nav-body">
+      <div style="height:50px;width:100%"></div>
+
+      <nav class="navbar navbar-default title-bar">
+        <div class="navbar-header ">
+          <div class="navbar-brand grp-title">{{friend.fm_Name}}</div>
+        </div>
+
+        <button type="button" class="btn btn-default" id="add-bill-btn" data-toggle="modal" data-target="#addFriendBill">Add Bill</button>
+        <button type="button" class="btn btn-default" id="settle-btn" data-toggle="modal" data-target="#FriendSettle">Settle up</button>
+      </nav>
+
+      <!--Common Groups-->
+      <ul class="list-group list-group-flush" *ngIf="fSettle">
+        <li class="list-group-item trans" *ngFor="let b of fSettle.fS_GSettle">
+          <input type="hidden" value="{{b.gsM_Gid}}" name="bid" #bid />
+          <span class="badge"> com <br />grp</span>
+          <a class="menu-content gb-name"  [routerLink]='["../../groups/",b.gsM_Gid]'>
+            {{b.gsM_Groupname}}
+          </a>
+          <span class="b-amount" *ngIf="b.gsM_Amount<0" [ngStyle]="{'color':'red'}">You owe {{b.gsM_Amount*(-1) | currency:'INR'}} {{friend.fm_Name}}</span>
+          <span class="b-amount" *ngIf="b.gsM_Amount>0" [ngStyle]="{'color':'green'}">{{friend.fm_Name}} owes {{b.gsM_Amount | currency:'INR'}}</span>
+        </li>
+      </ul>
+
+
+      <div>
+        <ul class="list-group" *ngIf="trans.length>0">
+          <li class="list-group-item acts" *ngFor="let t of trans">
+            <span class="badge">  {{t.fT_Date|date:'dd'}}<br />{{t.fT_Date|date:'LLL'}} </span>
+            <div class="activity">
+              {{t.fT_PaidBy}} paid {{t.fT_ReceivedByFriend}} {{t.fT_Amount|currency:'INR'}}
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-3 left-panel">
+      <div style="height:50px;width:100%"></div>
+      <div *ngIf="fAmount>0">
+        <div>{{friend.fm_Name}} owes you</div>
+        <div style="color:green">{{fAmount| currency:'INR'}}</div>
+      </div>
+      <div *ngIf="fAmount<0">
+        <div>You owe {{friend.fm_Name}}</div>
+        <div style="color:red">{{fAmount*(-1)| currency:'INR'}}</div>
+      </div>
+    </div>
+   </div>
+</body>

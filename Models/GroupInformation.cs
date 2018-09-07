@@ -13,6 +13,8 @@ namespace Splitwise.Models
 
         public string Gi_Admin { get; set; }
 
+        public DateTime Gi_Date { get; set; }
+
         public List<string> Gi_Members { get; set; }
 
         public List<BillInformation> Gi_Bills { get; set; }

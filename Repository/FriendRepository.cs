@@ -20,6 +20,7 @@ namespace Splitwise.Repository
 
         public int AddFriend(FriendList friend)
         {
+
             var act = new Activity();
             act.A_DoneBy = friend.User_Id;
             act.A_ForFriend = friend.Friend_Id;
@@ -38,18 +39,31 @@ namespace Splitwise.Repository
             return friends;
         }
 
-        public Dictionary<int, string> GetFriends(int id)
+        public int CheckFriend(int uid, int fid)
         {
-            var friend = new Dictionary<int ,string>();
+            var temp = context.FriendList.Where(f =>
+            (f.User_Id == uid && f.Friend_Id == fid) ||
+            (f.User_Id ==fid && f.Friend_Id == uid)).Select(i=>i.Fl_Id).ToList();
+            if(temp.Count>0)
+                return temp[0];
+            return 0;
+        }
+
+        public IEnumerable<FriendModel> GetFriends(int id)
+        {
+            var friend = new List<FriendModel>();
             var friends = context.FriendList.Where(b => b.User_Id == id||b.Friend_Id==id).ToList();
             for (int i = 0; i < friends.Count; i++)
             {
+                var fm= new FriendModel();
                 var frd=new Users();
                 if(friends[i].User_Id==id)
                   frd = context.Users.SingleOrDefault(b => b.U_Id == friends[i].Friend_Id && b.U_Deleted==false);
                 else
                     frd = context.Users.SingleOrDefault(b => b.U_Id == friends[i].User_Id && b.U_Deleted==false);
-                friend.Add(frd.U_Id,frd.U_Name);              
+                fm.Fm_Id = frd.U_Id;
+                fm.Fm_Name = frd.U_Name;
+                friend.Add(fm);              
             }
               
             return friend;
@@ -62,8 +76,8 @@ namespace Splitwise.Repository
             act.A_Description = "sent invitation to "+inv.I_Email;
             act.A_Date = DateTime.Now;
             context.Activities.Add(act);
-
             context.Invitation.Add(inv);
+           
             int res = context.SaveChanges();
             return res;
         }
@@ -78,6 +92,15 @@ namespace Splitwise.Repository
                 res = context.SaveChanges();
             }
             return res;
+        }
+
+        public FriendModel GetFriend(int fid)
+        {
+            var frd = new FriendModel();
+            var friend = context.Users.SingleOrDefault(f=>f.U_Id==fid);
+            frd.Fm_Id = friend.U_Id;
+            frd.Fm_Name = friend.U_Name;
+            return frd;
         }
     }
 }

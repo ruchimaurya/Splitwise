@@ -1,0 +1,35 @@
+.title-bar{
+  background-color:#C5C0CA;
+}
+
+.grp-title{
+  color:#2B193D;
+}
+
+#add-bill-btn, #settle-btn{
+  background-color:#514260;
+  color:white;
+  float: right;
+  margin: 7px 1%;
+}
+
+.left-panel{
+  background-color:#D8D5DB;
+  min-height:100vh;
+}
+
+.badge{
+    color: #514260;
+    background-color:#C5C0CA;
+    border-radius: 5px;
+    float:left;
+    height: 30px;   
+    margin:-4px 0; 
+}
+
+.activity{
+  padding: 0 40px;
+}
+.acts{
+  background: #D8D5DB;
+}

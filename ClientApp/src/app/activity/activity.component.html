@@ -1,0 +1,29 @@
+<html>
+<body *ngIf="activity">
+  <div class="row" style="display: flex;">
+    <div class="col-sm-9 nav-body">
+      <div style="height:50px;width:100%"></div>
+      <nav class="navbar navbar-default title-bar">
+        <div class="navbar-header ">
+          <div class="navbar-brand grp-title">Recent Activity</div>
+        </div>
+      </nav>
+
+      <div>
+        <ul class="list-group" *ngIf="activity.length>0">
+          <li class="list-group-item acts" *ngFor="let a of activity">
+            <span class="badge">  {{a.aM_Date|date:'dd'}}<br />{{a.aM_Date|date:'LLL'}} </span>
+            <div class="activity">
+              <b> {{a.aM_DoneBy}}</b> {{a.aM_Description}} <b>{{a.aM_ForFriend}}</b>
+              <span *ngIf="a.aM_ForGroup!=null"> in <b>{{a.aM_ForGroup}}</b></span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="col-sm-3 right-panel">
+    </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+.navbar{
+  background-color:#2B193D;
+}
+
+#title-tag{
+  font-family:'Times New Roman', Times, serif;
+  letter-spacing:10px;
+  padding:15px 100px;
+  color: white;
+  font-size:20px;
+}
+
+
+.main-div{
+  width:50%;
+  margin:100px auto;
+  background:#D8D5DB;
+  min-height:300px;
+  border-radius:20px;
+}
+
+.input-lg{
+  width:50%;
+}
+
+#member{
+  width:50%;
+}
+
+#create-btn, #cancel-btn{
+  background-color:#3E2D4E;
+  margin-left:30px;
+}
+ .error{
+   color:red;
+ }

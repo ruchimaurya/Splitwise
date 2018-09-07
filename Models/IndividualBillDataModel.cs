@@ -15,7 +15,7 @@ namespace Splitwise.Models
 
         public double Ib_Amount { get; set; }
 
-        public List<BillMember> billMembers { get; set; }
+        public List<int> billMembers { get; set; }
 
     }
 }

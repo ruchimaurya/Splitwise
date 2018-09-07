@@ -2,10 +2,7 @@
 using Splitwise.Models;
 using Splitwise.Repository;
 using Splitwise.SplitwiseDB;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Splitwise.Controllers
 {
@@ -37,18 +34,18 @@ namespace Splitwise.Controllers
             return alltrans;
         }
 
-        [Route("api/transactions/groups")]
+        [Route("api/transactions/groups/{gid}")]
         [HttpGet]
-        public IEnumerable<Transactions> GetAllGroupTransactions()
+        public IEnumerable<FriendTransactionModel> GetGroupsAllTransactions(int gid)
         {
-            var grptrans = _tranRepo.GetAllGroupTransactions();
+            var grptrans = _tranRepo.GetGroupsAllTransactions(gid);
             return grptrans;
         }
 
 
         [Route("api/transactions/friends/{uid}/{fid}")]
         [HttpGet]
-        public IEnumerable<Transactions> GetIndividualTransactions(int uid, int fid)
+        public IEnumerable<FriendTransactionModel> GetIndividualTransactions(int uid, int fid)
         {
             var frdtrans = _tranRepo.GetIndividualTransactions(uid,fid);
             return frdtrans;

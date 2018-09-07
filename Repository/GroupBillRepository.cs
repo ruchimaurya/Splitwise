@@ -21,11 +21,11 @@ namespace Splitwise.Repository
         {
             var date = DateTime.Now;
 
-            //add activity
+            ////add activity
             var act = new Activity();
             act.A_DoneBy = gbill.Gb_PaidBy;
             act.A_ForGroup = gbill.Gb_ForGroup;
-            act.A_Description ="Added new bill of "+gbill.Gb_Amount+"$ as "+gbill.Gb_Name;
+            act.A_Description = "Added new bill of " + gbill.Gb_Amount + "$ as " + gbill.Gb_Name;
             act.A_Date = date;
             context.Activities.Add(act);
 
@@ -37,7 +37,7 @@ namespace Splitwise.Repository
             gbill.Gb_DateTime = date;
 
             context.GroupBills.Add(gbill);
-            context.Transactions.Add(trans);
+           context.Transactions.Add(trans);
 
             int res = context.SaveChanges();
             return res;
@@ -74,6 +74,7 @@ namespace Splitwise.Repository
             billInfo.BI_Name = bill.Gb_Name;
             billInfo.BI_PaidBy = bm.U_Name;
             billInfo.BI_PaidFor = new List<string>(new string[] { grp.G_Name });
+            billInfo.BI_Date = bill.Gb_DateTime;
             billInfo.BI_Amount = bill.Gb_Amount;
             return billInfo;
         }

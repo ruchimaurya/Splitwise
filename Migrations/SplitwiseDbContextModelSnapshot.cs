@@ -276,7 +276,7 @@ namespace Splitwise.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("U_Contact");
+                    b.Property<double?>("U_Contact");
 
                     b.Property<bool>("U_Deleted");
 

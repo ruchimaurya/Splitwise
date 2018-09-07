@@ -1,0 +1,25 @@
+<div class="row" style="display: flex;">
+  <div class="col-sm-9 nav-body">
+    <div style="height:50px;width:100%"></div>
+    <nav class="navbar navbar-default title-bar">
+      <div class="navbar-header ">
+        <div class="navbar-brand grp-title">All Expenses</div>
+      </div>
+      <button type="button" class="btn btn-default" id="add-bill-btn" data-toggle="modal" data-target="#myModal1">Add Bill</button>
+      <button type="button" class="btn btn-default" id="settle-btn" (click)="GetSettle()">Settle up</button>
+    </nav>
+    <div>
+      <ul class="list-group" *ngIf="expense">
+        <li class="list-group-item acts" *ngFor="let x of expense">
+          <span class="badge">  {{x.fT_Date|date:'dd'}}<br />{{x.fT_Date|date:'LLL'}} </span>
+          <div class="activity">
+            {{x.fT_PaidBy}} paid {{x.fT_ReceivedByFriend}}
+            <span  [ngStyle]="{'color': x.fT_PaidBy=='You '? 'red' : 'green'}">{{ x.fT_Amount|currency:'INR'}}</span>
+            <ng-container *ngIf="x.fT_ReceivedByGroup!=null">in {{x.fT_ReceivedByGroup}}</ng-container>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-sm-3 left-panel"></div>
+  </div>

@@ -20,7 +20,7 @@ namespace Splitwise.Models
         [Required]
         public string U_Email { get; set; }
 
-        public double U_Contact { get; set; }
+        public double? U_Contact { get; set; }
 
         public bool U_Deleted { get; set; }
 

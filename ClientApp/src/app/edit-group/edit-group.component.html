@@ -1,0 +1,50 @@
+<body  *ngIf="tmem">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" id="title-tag" href="#" [routerLink]='["dashboard/"]'>SPLITWISE</a>
+      </div>
+
+    </div>
+  </nav>
+
+  <div class="container main-div">
+    <h3>My group is called...</h3>
+    <div class="container" style="width:100%">
+      <form #f="ngForm" (ngSubmit)="EditGroup()">
+        <div class="error" *ngIf="name.touched && !name.valid">*Group Name is Required!</div>
+        <div class="form-group">
+          <input autofocus class="form-control input-lg" type="text" id="name" name="name" placeholder="Enter Group Name" [(ngModel)]="group.g_Name" required #name="ngModel">
+        </div>
+        <div class="container grp-mem">
+          <h4>Group Members</h4>
+          <div *ngFor="let gm of gmem">
+            <span class='glyphicon glyphicon-user'></span>
+            <input type="hidden" value="{{gm.m_MemberId}}" [(ngModel)]="gm.m_MemberId" name="{{gm.m_MemberId}}" #mid="ngModel" />
+            <a>{{gm.m_Name}} <i class="fa fa-close cross" role="button" (click)="RemoveMember(mid.value)" title="only Group admin can Remove member!"></i></a>
+          </div>
+          <a class="add-mem" data-toggle="collapse"  data-target="#add">Add Member</a>
+          <div id="add" class="collapse">
+            <div class="form-group">
+              <label for="member">Add Member (hold ctrl to add):</label>
+              <select multiple class="form-control" id="member" name="member" [(ngModel)]="selfrd" #member="ngModel">
+                <ng-container *ngFor="let f of friend">                  
+                  <option *ngIf="tmem.indexOf(f.fm_Name)<0" value="{{f.fm_Id}}">{{f.fm_Name}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <input type="submit" id="create-btn" [disabled]="!f.valid" class="btn btn-success" style="background-color:green" value="Save changes" />
+              <input type="button" [routerLink]='["../../../../home/"+uid+"/groups/"+gid]' id="cancel-btn" class="btn btn-primary" value="Cancel" />
+              <button type="button" id="delete-button" (click)="DeleteGroup()" class="btn btn-danger">Delete Group</button>
+            </div>
+          </div>
+
+</form>
+    </div>
+  </div>
+</body>

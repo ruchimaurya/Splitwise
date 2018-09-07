@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>SplitWise</title>
+
+</head>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" id="title-tag" href="#">SPLITWISE</a>
+      </div>
+      <button type="button" class="btn btn-default" id="register-btn" (click)="openRegistration()">Register</button>
+    </div>
+  </nav>
+
+  <div style="height:50px;width:100%"></div>
+  <div class="login-form-container">
+    <h3 class="login-txt">LOGIN</h3>
+    <form #f="ngForm" (ngSubmit)="login()" style="padding:0 10%">
+
+      <div class="error" *ngIf="email.touched && !email.valid">*Email is Required!</div>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <span class="glyphicon glyphicon-envelope"></span>
+          </div>
+          <input class="form-control" type="email" id="email" name="email" [(ngModel)]="user.email" placeholder="Enter your Email" required email #email="ngModel" />
+        </div>
+      </div>
+
+      <div class="error" *ngIf="password.touched && !password.valid">*Password is Required!</div>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <span class="glyphicon glyphicon-lock"></span>
+          </div>
+          <input class="form-control" id="password" name="password" type="password" [(ngModel)]="user.password" placeholder="Enter Password" required #password="ngModel" />        
+        </div>
+      </div>
+
+      <input type="submit" id="login-btn" class="btn btn-primary" [disabled]="!f.valid" value="Login" />
+
+    </form>
+  </div>
+
+</body>
+</html>

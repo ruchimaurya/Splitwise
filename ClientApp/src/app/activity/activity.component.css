@@ -1,0 +1,37 @@
+height{
+  height:100%;
+}
+body{
+  min-height:100%;
+  background-color: #E2E0E4;
+  position:relative;
+}
+.title-bar{
+  background-color:#C5C0CA;
+}
+
+.grp-title{
+  color:#2B193D;
+}
+
+.right-panel{
+    background-color: #D8D5DB;
+    min-height:100vh;
+    height: 100%;
+}
+
+.badge{
+    color: #514260;
+    background-color:#C5C0CA;
+    border-radius: 5px;
+    float:left;
+    height: 30px;   
+    margin:-4px 0; 
+}
+
+.activity{
+  padding: 0 40px;
+}
+.acts{
+  background: #D8D5DB;
+}

@@ -13,9 +13,10 @@ namespace Splitwise.Models
 
         public string BI_PaidBy { get; set; }
 
-        public List<string> BI_PaidFor { get; set; }
+        public DateTime BI_Date { get; set; }
 
         public double BI_Amount { get; set; }
 
+        public List<string> BI_PaidFor { get; set; }
     }
 }

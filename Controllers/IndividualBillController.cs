@@ -28,7 +28,7 @@ namespace Splitwise.Controllers
             return bills;
         }
 
-        [Route("api/individualbills")]
+        [Route("api/individualbills/")]
         [HttpPost]
         public IActionResult AddIndividualBill([FromBody]IndividualBillDataModel model)
         {

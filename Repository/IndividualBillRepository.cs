@@ -27,7 +27,7 @@ namespace Splitwise.Repository
         {
             var ib = new IndividualBills();
             List<Transactions> trans = new List<Transactions>();
-            var bm = new List<BillMember>();
+            var bm = new List<int>();
             var dt= DateTime.Now;
 
             ib.Ib_DateTime = dt;
@@ -43,13 +43,15 @@ namespace Splitwise.Repository
             ib = context.IndividualBills.OrderByDescending(d => d.Ib_Id).FirstOrDefault();
             for (int i = 0; i < bm.Count; i++)
             {
+                var bmem = new BillMember();
                 var temp = new Transactions();
                 temp.T_PaidBy = model.Ib_PaidBy;
                 temp.T_Amount = model.Ib_Amount / (model.billMembers.Count + 1);
-                temp.T_ReceivedByFriend = bm[i].Bm_Paidfor;
+                temp.T_ReceivedByFriend = bm[i];
                 temp.T_DateTime = dt;
-                bm[i].Bm_BillId = ib.Ib_Id;
-                context.BillMembers.Add(bm[i]);
+                bmem.Bm_BillId = ib.Ib_Id;
+                bmem.Bm_Paidfor=bm[i];
+                context.BillMembers.Add(bmem);
                 context.Transactions.Add(temp);
 
             }

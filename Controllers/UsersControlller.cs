@@ -18,7 +18,16 @@ namespace Splitwise.Controllers
             _userRepo = ur;      
         }
 
-        [Route("api/users")]
+        [Route("api/users/login/{email}/{password}")]
+        [HttpGet]
+        public int UserLogin(string email, string password)
+        {
+            var users = _userRepo.UserLogin(email, password);
+            return users;
+            //await mapper.Map<IEnumerable<Users>, IEnumerable<Users>>(users);
+        }
+
+        [Route("api/users/")]
         [HttpGet]
         public IEnumerable<Users> GetUsers()
         {
@@ -27,7 +36,16 @@ namespace Splitwise.Controllers
             //await mapper.Map<IEnumerable<Users>, IEnumerable<Users>>(users);
         }
 
-        [Route("api/users")]
+        [Route("api/users/getid/{email}")]
+        [HttpGet]
+        public int GetUidFromEmail(string email)
+        {
+            var id = _userRepo.GetUidFromEmail(email);
+            return id;
+            //await mapper.Map<IEnumerable<Users>, IEnumerable<Users>>(users);
+        }
+
+        [Route("api/users/")]
         [HttpPost]
         public IActionResult CreateUser([FromBody]Users user)
         {

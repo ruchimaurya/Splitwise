@@ -1,0 +1,59 @@
+body{
+  width:100%;
+}
+.navbar{
+  background-color:#2B193D;
+}
+
+#title-tag{
+  font-family:'Times New Roman', Times, serif;
+  letter-spacing:10px;
+  padding:15px 100px;
+  color: white;
+  font-size:20px;
+}
+
+
+.main-div{
+  width:50%;
+  margin:100px auto;
+  background:#D8D5DB;
+  min-height:300px;
+  border-radius:20px;
+}
+
+.input-lg{
+  width:100%;
+}
+
+#member{
+  width:100%;
+}
+
+#create-btn, #cancel-btn{
+  background-color:#3E2D4E;
+     margin: 20px 20px;
+}
+#delete-button{
+   margin: 20px 20px;
+}
+
+ .error{
+   color:red;
+ }
+ 
+.grp-mem{
+   width:100%;  
+}
+
+.cross{
+  float: right;
+  margin-right: 400px;
+  color:red;
+}
+
+.add-mem{
+   float: right;
+  margin-right: 400px;
+  color:#3E2D4E;
+}

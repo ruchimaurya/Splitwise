@@ -1,0 +1,65 @@
+.title-bar{
+  background-color:#C5C0CA;
+}
+
+.grp-title{
+  color:#2B193D;
+}
+
+#add-bill-btn, #settle-btn{
+  background-color:#514260;
+  color:white;
+  float: right;
+  margin: 7px 1%;
+}
+
+.left-panel{
+  background-color:#D8D5DB;
+  min-height:100vh;
+}
+
+
+.badge{
+    color: #514260;
+    background-color:#C5C0CA;
+    border-radius: 5px;
+    float:left;
+    height: 30px;   
+    margin:-4px 0; 
+}
+
+.activity{
+  padding: 0 40px;
+}
+.acts{
+  background: #D8D5DB;
+}
+
+
+.month-div{
+    padding: 1px 10px;
+    background: #C5C0CA;  
+    font-size: 11px;
+    margin-top: -20px;
+    }
+
+.trans{
+  background-color: #D8D5DB;
+}
+
+.bill-title{
+  font-size:20px;
+  text-decoration: underline;
+  color:#2B193D;
+}
+
+.gb-name{
+  color:#3E2D4E;
+  font-size:16px;
+  font-weight:600;
+  margin-left:15px;
+}
+
+.b-amount{
+  float:right;
+}

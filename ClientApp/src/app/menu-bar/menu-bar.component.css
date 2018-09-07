@@ -1,0 +1,45 @@
+.vertical-menu {
+    width: 100%;
+   
+}
+
+.menu-content {
+    background-color: #D8D5DB;
+    color: black;
+    display: block;
+    padding: 5px 0;
+    text-decoration: none;
+    text-align:left;
+    height:100%;
+}
+
+.menu-hdr{
+   background-color: #C5C0CA;
+    color: black;
+    display: block;
+    padding: 4px 0;
+    text-decoration: none;
+    text-align:left;
+    height:100%;
+}
+
+.vertical-menu .menu-content:hover {
+    background-color: #B1ABB8;
+    color: #3E2D4E;
+}
+
+.vertical-menu .active {
+    background-color: #D8D5DB;
+    color: #0C0711;
+}
+
+.modal-header{
+  background-color:#2B193D;
+  color:white;
+}
+
+.btn{
+    background-color: #514260;
+    color: white;
+    font-size: 15px;
+}

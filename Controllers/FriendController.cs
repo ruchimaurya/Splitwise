@@ -39,7 +39,7 @@ namespace Splitwise.Controllers
             int res = _frdRepo.InviteFriend(inv);
             if (res != 0)
             {
-                return Ok();
+                return Ok(res);
             }
             return Forbid();
         }
@@ -62,6 +62,30 @@ namespace Splitwise.Controllers
                 return NotFound();
             }
             return Ok(friends);
+        }
+
+        [Route("api/friends/{uid}/{fid}")]
+        [HttpGet]
+        public IActionResult CheckFriend(int uid,int fid)
+        {
+            var friends = _frdRepo.CheckFriend(uid,fid);
+            if (friends > 0)
+            {
+                return Ok(friends);
+            }
+            return Ok(0);
+        }
+
+        [Route("api/friend/{fid}")]
+        [HttpGet]
+        public IActionResult GetFriend(int fid)
+        {
+            var friend = _frdRepo.GetFriend(fid);
+            if (friend == null)
+            {
+                return NotFound();
+            }
+            return Ok(friend);
         }
 
         [Route("api/friends/{uid}/{fid}")]

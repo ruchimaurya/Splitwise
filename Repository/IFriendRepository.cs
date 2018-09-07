@@ -9,10 +9,12 @@ namespace Splitwise.Repository
 {
     public interface IFriendRepository
     {
-        Dictionary<int,string> GetFriends(int id);
+        IEnumerable<FriendModel> GetFriends(int id);
         IEnumerable<FriendList> GetAllFrds();
         int AddFriend(FriendList friend);
         int InviteFriend(Invitation inv);
         int RemoveFriend(int uid, int fid);
+        FriendModel GetFriend(int fid);
+        int CheckFriend(int uid, int fid);
     }
 }

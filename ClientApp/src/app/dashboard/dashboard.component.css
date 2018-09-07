@@ -1,0 +1,48 @@
+.dashboard-body{
+  background-color:#E2E0E4;
+}
+
+.db-header{
+  background-color:#C5C0CA;
+  height:130px;
+  width:100%;
+}
+
+.db-hdr-top{
+  height:80px;
+  width:100%;
+  border-bottom:1px solid;
+}
+
+.db-hdr-bottom{
+  height:50px;
+  width:100%;
+  border-bottom:1px solid;
+}
+
+.left-panel{
+  background-color:#D8D5DB;
+  min-height:100vh;
+}
+
+.main-body{
+    background-color:#D8D5DB;
+}
+
+.db-title{
+     color: #2B193D;
+    font-size: 25px;
+    line-height: 80px;
+    padding: 0 10px;
+}
+
+#add-bill-btn, #settle-btn{
+  background-color:#514260;
+  color:white;
+  float: right;
+  margin: 20px 1%;
+}
+
+.owe-class{
+  text-align:center;
+}

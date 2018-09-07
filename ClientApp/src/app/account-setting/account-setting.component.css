@@ -1,0 +1,51 @@
+.navbar{
+  background-color:#2B193D;
+}
+
+.clear{
+  clear:both;
+}
+#title-tag{
+  font-family:'Times New Roman', Times, serif;
+  letter-spacing:10px;
+  padding:15px 100px;
+  color: white;
+  font-size:20px;
+}
+
+#register-btn{
+  background-color:#514260;
+  color:white;
+  float: right;
+  margin: 7px 5%;
+}
+
+#login-btn, #cancel-btn{
+  background-color:#3E2D4E;
+  margin-bottom:15px;
+  margin-left:20px;
+}
+
+.login-form-container{
+  width:30%;
+  margin:0 auto;
+  background-color:#D8D5DB;
+  min-height:350px;
+  border-radius:20px;
+}
+
+.login-txt{
+      text-align: center;
+    color: #3E2D4E;
+    line-height: 90px;
+    font-size: 30px;
+}
+
+.error{
+  color:red;
+}
+
+.edit-pwd{
+  margin-left:215px;
+  color: #3E2D4E;
+}

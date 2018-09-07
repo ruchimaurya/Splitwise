@@ -12,11 +12,13 @@ namespace Splitwise.Repository
     {
         IEnumerable<Users> GetUsers();
         int CreateUser(Users user);
+        int UserLogin(string email, string password);
         Users GetUser(int id);
         int UpdatUser(int id, Users b);
         int DeleteUser(int id);
         IEnumerable<Groups> GetUsersGroup(int id);
-        IEnumerable<Transactions> GetUsersTransaction(int id);
-        IEnumerable<Activity> GetUsersActivity(int id);
+        IEnumerable<FriendTransactionModel> GetUsersTransaction(int id);
+        IEnumerable<ActivityModel> GetUsersActivity(int id);
+        int GetUidFromEmail(string email);
     }
 }

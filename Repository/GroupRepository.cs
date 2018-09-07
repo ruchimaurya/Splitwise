@@ -45,7 +45,7 @@ namespace Splitwise.Repository
             context.Activities.Add(act);
             
             int res = context.SaveChanges();
-            return res;
+            return gid[0];
         }
 
         public int DeleteGroup(int id)
@@ -148,6 +148,7 @@ namespace Splitwise.Repository
             var grp = context.Groups.SingleOrDefault(g => g.G_Id == id);
             GInfo.Gi_GroupId = grp.G_Id;
             GInfo.Gi_Name = grp.G_Name;
+            GInfo.Gi_Date = grp.G_Date;
             var tempAdm = context.Users.Where(i => i.U_Id == grp.G_Admin).Select(i => i.U_Name).ToList();
             GInfo.Gi_Admin = tempAdm[0];                
             var gm=context.GroupMembers.Where(g => g.GM_GroupId == id).Select(g => g.Gm_Member).ToList();

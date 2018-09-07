@@ -8,14 +8,14 @@ namespace Splitwise.Repository
 {
     public interface ITransactionRepository
     {
-        IEnumerable<Transactions> GetAllGroupTransactions();
+        IEnumerable<FriendTransactionModel> GetGroupsAllTransactions(int gid);
         IEnumerable<Transactions> GetUsersAllTransactions(int id);
         IEnumerable<Transactions> GetAllTransactions();
-        IEnumerable<Transactions> GetIndividualTransactions(int uid,int fid);
+        IEnumerable<FriendTransactionModel> GetIndividualTransactions(int uid,int fid);
         int AddTransaction(Transactions trans);
         int DeleteTransaction(int id);
         int UpdateTransaction(int id, Transactions trans);
-        double GetSettlementIndividual(int uid, int fid);
+        FriendSettlementModel GetSettlementIndividual(int uid, int fid);      
         IEnumerable<GroupSettlementModel> GetSettlementGroup(int id);
     }
 }
