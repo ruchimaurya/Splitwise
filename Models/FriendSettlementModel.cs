@@ -6,6 +6,10 @@ namespace Splitwise.Models
     {
         public double FS_iAmount { get; set; }
 
+        public string FS_Payer { get; set; }
+
+        public string FS_Receiver { get; set; }
+
         public List<GSModel> FS_GSettle { get; set; }
     }
 

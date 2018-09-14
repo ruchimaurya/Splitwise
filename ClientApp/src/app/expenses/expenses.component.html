@@ -5,21 +5,37 @@
       <div class="navbar-header ">
         <div class="navbar-brand grp-title">All Expenses</div>
       </div>
-      <button type="button" class="btn btn-default" id="add-bill-btn" data-toggle="modal" data-target="#myModal1">Add Bill</button>
-      <button type="button" class="btn btn-default" id="settle-btn" (click)="GetSettle()">Settle up</button>
+      <button type="button" class="btn btn-default" id="add-bill-btn" data-toggle="modal" data-target="#addFriendBill">Add Bill</button>
+      <button type="button" class="btn btn-default" id="settle-btn" data-toggle="modal" data-target="#selectPayee">Settle up</button>
     </nav>
     <div>
       <ul class="list-group" *ngIf="expense">
         <li class="list-group-item acts" *ngFor="let x of expense">
           <span class="badge">  {{x.fT_Date|date:'dd'}}<br />{{x.fT_Date|date:'LLL'}} </span>
           <div class="activity">
-            {{x.fT_PaidBy}} paid {{x.fT_ReceivedByFriend}}
+            <b>{{x.fT_PaidBy}}</b>  paid <b>{{x.fT_ReceivedByFriend}}</b>
             <span  [ngStyle]="{'color': x.fT_PaidBy=='You '? 'red' : 'green'}">{{ x.fT_Amount|currency:'INR'}}</span>
-            <ng-container *ngIf="x.fT_ReceivedByGroup!=null">in {{x.fT_ReceivedByGroup}}</ng-container>
+            <ng-container *ngIf="x.fT_ReceivedByGroup!=null">in <b>{{x.fT_ReceivedByGroup}}</b></ng-container>
           </div>
         </li>
       </ul>
     </div>
   </div>
-  <div class="col-sm-3 left-panel"></div>
+  <div class="col-sm-3 left-panel">
+    <div style="height:50px;width:100%"></div>    
+    <div class="final-amount">
+      <span style="font-size:13px">YOUR TOTAL BALANCE</span>
+      <div style="color:green" *ngIf="total>0">
+        <div>You are owed</div>
+        <div style="font-size:24px;">{{total| currency:'INR'}}</div>
+      </div>
+      <div style="color:red" *ngIf="total<0">
+        <div>You owe</div>
+        <div style="font-size:24px;">{{total*(-1)| currency:'INR'}}</div>
+      </div>
+      <div style="color:dimgray" *ngIf="total<0">
+        <div>You are Settled</div>        
+      </div>
+    </div>
+  </div>
   </div>

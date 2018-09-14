@@ -1,17 +1,86 @@
 <div class="main-body">
   <div class="row" style="display: flex;">
-    <div class="col-sm-9 nav-body">
+    <div class="col-sm-9 nav-body" style="background: #E2E0E4;">
       <div style="height:50px;width:100%"></div>
       <div class="db-header">
         <div class="db-hdr-top db-title">
           Dashboard
           <button type="button" class="btn btn-default" id="add-bill-btn" data-toggle="modal" data-target="#addFriendBill">Add Bill</button>
-          <button type="button" class="btn btn-default" id="settle-btn" (click)="GetSettle()">Settle up</button>
+          <button type="button" class="btn btn-default" id="settle-btn" data-toggle="modal" data-target="#selectPayee">Settle up</button>
         </div>
         <div class="db-hdr-bottom">
-          <div class="col-sm-4 owe-class ">total balance</div>
-          <div class="col-sm-4 owe-class ">you owe</div>
-          <div class="col-sm-4 owe-class ">you are owed</div>
+          <div class="col-sm-4 owe-class ">
+            total balance
+            <div *ngIf="total<0||total>0" [ngStyle]="{'color':total>0 ? 'green':'red'}">{{total|currency:'INR'}}</div>
+            <div *ngIf="total==0" style="color:dimgrey">{{total|currency:'INR'}}</div>
+          </div>
+          <div class="col-sm-4 owe-class ">
+            you owe
+            <div style="color:red">{{aPay|currency:'INR'}}</div>
+          </div>
+          <div class="col-sm-4 owe-class ">
+            you are owed
+            <div style="color:green">{{aRec|currency:'INR'}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container c1">
+        <div class="col-sm-6 you-owe">
+          <div class="well well-sm w1">YOU OWE</div>
+        </div>
+        <div class="col-sm-6 you-owe">
+          <div class="well well-sm w1">YOU ARE OWED</div>
+        </div>
+      </div>
+      <div class="container c1">
+        <div class="col-sm-6 you-owe">
+          <div  *ngFor="let b of iFsList;let i = index">
+            <div role="button" class="well  well-sm owe1" *ngIf="b>0" (click)="gotoFwindow(frdList[i].fS_Payer)">
+              <div>{{frdList[i].fS_Payer}}</div>
+              <div style="color:green">{{b|currency:'INR'}}</div>
+              <div style="font-size:12px">
+                <!--<ul *ngIf="frdList[i].fS_iAmount>0">
+                  <li>You owe <span style="color:green">{{frdList[i].fS_iAmount|currency:'INR'}}</span> for "Non Group Expense"</li>
+                </ul>
+                <ul *ngIf="frdList[i].fS_iAmount<0">
+                  <li>You are owed <span style="color:red">{{frdList[i].fS_iAmount|currency:'INR'}}</span> for "Non Group Expense"</li>
+                </ul>-->
+                <ul *ngFor="let u of frdList[i].fS_GSettle">
+                  <ng-container *ngIf="u.gsM_Amount>0">
+                    <li>You owe <span style="color:green">{{u.gsM_Amount|currency:'INR'}}</span> For "{{u.gsM_Groupname}}"</li>
+                  </ng-container>
+                  <ng-container *ngIf="u.gsM_Amount<0">
+                    <li>You are owed <span style="color:red">{{u.gsM_Amount*(-1)|currency:'INR'}}</span> For "{{u.gsM_Groupname}}"</li>
+                  </ng-container>
+                </ul>
+              </div>
+            </div>
+            </div>
+        </div>
+        <div class="col-sm-6 you-owed">
+          <div *ngFor="let b of iFsList;let i = index" >        
+            <div class="well well-sm owe1" role="button" *ngIf="b<0" (click)="gotoFwindow(frdList[i].fS_Receiver)">
+              <div>{{frdList[i].fS_Receiver}}</div>
+              <div style="color:red">{{b*(-1)|currency:'INR'}}</div>
+              <div style="font-size:12px">
+                <!--<ul *ngIf="frdList[i].fS_iAmount>0">
+                  <li>You owe <span style="color:green">{{frdList[i].fS_iAmount|currency:'INR'}}</span> for "Non Group Expense"</li>
+                </ul>
+                <ul *ngIf="frdList[i].fS_iAmount<0">
+                  <li>You are owed <span style="color:red">{{frdList[i].fS_iAmount|currency:'INR'}}</span> for "Non Group Expense"</li>
+                </ul>-->
+                <ul *ngFor="let u of frdList[i].fS_GSettle">
+                  <ng-container *ngIf="u.gsM_Amount>0">
+                    <li>You owe <span style="color:green">{{u.gsM_Amount|currency:'INR'}}</span> For "{{u.gsM_Groupname}}"</li>
+                  </ng-container>
+                  <ng-container *ngIf="u.gsM_Amount<0">
+                    <li>You are owed <span style="color:red">{{u.gsM_Amount*(-1)|currency:'INR'}}</span> For "{{u.gsM_Groupname}}"</li>
+                  </ng-container>
+                </ul>
+              </div>
+            </div>
+            </div>
         </div>
       </div>
     </div>

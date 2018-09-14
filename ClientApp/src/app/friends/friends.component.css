@@ -6,7 +6,7 @@
   color:#2B193D;
 }
 
-#add-bill-btn, #settle-btn{
+#add-bill-btn, #settle-btn, #setting-btn{
   background-color:#514260;
   color:white;
   float: right;
@@ -62,4 +62,8 @@
 
 .b-amount{
   float:right;
+}
+.final-amount{
+  margin:100px auto;
+  font-size: 16px;
 }

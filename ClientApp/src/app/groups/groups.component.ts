@@ -18,8 +18,9 @@ export class GroupsComponent implements OnInit {
   group: any;
   gBills: any;
   bInfo: any;
+  gTrans: any;
   settle: any;
-
+  btList=[];
   ngOnInit() {
    // console.log(this.uid, this.gid);
     this.groupsService.gid = this.gid;
@@ -27,9 +28,16 @@ export class GroupsComponent implements OnInit {
 
     this.groupsService.getGroupInfo(this.gid)
       .subscribe(g => {
-        this.group = g;
-    //    console.log(g);
+        this.group = g;       
+         //    console.log(g);  
       });
+
+    this.groupsService.GetGroupsAllTransactions(this.gid)
+      .subscribe(b => {
+        this.gTrans = b;
+        console.log('Group trans', this.gTrans);
+      });
+
 
     this.groupsService.GetGroupSettlement(this.gid)
       .subscribe(s => {

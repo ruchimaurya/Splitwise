@@ -7,7 +7,7 @@
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" id="title-tag" href="#" [routerLink]='["dashboard/"]'>SPLITWISE</a>
+        <a class="navbar-brand" id="title-tag" href="#" [routerLink]='["../../home/"+uid]'>SPLITWISE</a>
       </div>
       <div class="container">
         <div class="dropdown" style="float:right">
@@ -18,7 +18,7 @@
           <ul class="dropdown-menu">
             <li><a [routerLink]='["../../settings/",uid]'>Account Setting</a></li>
             <li><a [routerLink]='["../../addgroup/",uid]'>Create Group</a></li>
-            <li><a href="" (click)="Logout()">Log out</a></li>
+            <li><a role="button" (click)="Logout()">Log out</a></li>
           </ul>
         </div>
       </div>
@@ -26,7 +26,7 @@
   </nav>
 
   <div class="container">
-    <div class="row">
+    <div class="row" >
       <div class="col-sm-3 nav-menu"><app-menu-bar></app-menu-bar></div>
       <div class="col-sm-9 nav-body">
         <router-outlet></router-outlet>
@@ -42,7 +42,7 @@
         <!--Header-->
         <div class="modal-header text-center hdr">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true" class="white-text" style="color:white">&times;</span>
+            <span aria-hidden="true" class="white-text" style="color:white" #closegb>&times;</span>
           </button>
           <h4 class="modal-title white-text w-100 font-weight-bold py-2">Add a bill..</h4>
         </div>
@@ -50,6 +50,13 @@
         <!--Body-->
         <form #f1="ngForm" (ngSubmit)="addGroupBill()">
           <div class="modal-body">
+            <div class="payer">
+              <label>Paid by</label>
+              <div>
+                <span class="badge payee">{{billPayer}}</span>
+                <a style="float:right" data-toggle="modal" (click)="changegbPayer()" data-target="#changegbPayee">Change Payer</a>
+              </div>
+            </div>
             <div class="error" *ngIf="name.touched && !name.valid">*Bill Name is Required!</div>
             <div class="md-form mb-5">
               <input type="text" name="name" class="form-control validate" [(ngModel)]="gBill.gb_Name" placeholder="Bill Name" required #name="ngModel">
@@ -67,7 +74,29 @@
           </div>
         </form>
       </div>
-      <!--/.Content-->
+      <!--end content-->
+    </div>
+    <!--change bill payer-->
+    <div class="modal" id="changegbPayee">
+      <div class="modal-dialog cPayee">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header hdr">
+            <h4 class="modal-title">Select Payer</h4>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <ul class="list-group">
+              <li class="list-group-item payee-list" (click)="changePayee('You')">You</li>
+            </ul>
+            <ul class="list-group" *ngFor="let p of gmem">
+              <li class="list-group-item payee-list" role="button" (click)="changegbPayee(p.m_Name,p.m_MemberId)">{{p.m_Name}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -79,7 +108,7 @@
         <!--Header-->
         <div class="modal-header text-center hdr">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true" class="white-text" style="color:white">&times;</span>
+            <span aria-hidden="true" class="white-text" style="color:white" #closeib>&times;</span>
           </button>
           <h4 class="modal-title white-text w-100 font-weight-bold py-2">Add a bill..</h4>
         </div>
@@ -87,6 +116,14 @@
         <!--Body-->
         <form #f2="ngForm" (ngSubmit)="addFriendBill()">
           <div class="modal-body">
+            <div class="payer">
+              <label>Paid by</label>
+              <div>
+                <span class="badge payee">{{billPayer}}</span>
+                <a style="float:right" data-toggle="modal" data-target="#changePayee">Change Payer</a>
+              </div>
+            </div>
+
             <div class="error" *ngIf="bname.touched && !bname.valid">*Bill Name is Required!</div>
             <div class="md-form mb-5">
               <input type="text" name="bname" class="form-control validate" [(ngModel)]="iBill.Ib_Name" placeholder="Bill Name" required #bname="ngModel" />
@@ -98,9 +135,12 @@
             </div>
             <div style="height:10px;width:100%"></div>
             <label for="member">Add Member (hold ctrl to add):</label>
-            <div class="error" *ngIf="member.touched && !member.valid">*Bill Name is Required!</div>
+            <div class="error" *ngIf="member.touched && !member.valid">*Select Bill Member</div>
             <select multiple class="form-control" id="member" name="member" [(ngModel)]="temp" #member="ngModel" required>
-              <option *ngFor="let f of friends" value={{f.fm_Id}}>{{f.fm_Name}}</option>
+              <ng-container *ngFor="let f of friends">
+                <option *ngIf="f.fm_Name!=billPayer" value={{f.fm_Id}}>{{f.fm_Name}}</option>
+              </ng-container>
+
             </select>
           </div>
 
@@ -112,6 +152,30 @@
       </div>
       <!--/.Content-->
     </div>
+    <!--select payer-->
+    <div class="modal" id="changePayee">
+      <div class="modal-dialog cPayee">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header hdr">
+            <h4 class="modal-title">Select Payer</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <ul class="list-group">
+              <li class="list-group-item payee-list" (click)="changePayee('You')">You</li>
+            </ul>
+            <ul class="list-group" *ngFor="let p of friends">
+              <li class="list-group-item payee-list" role="button" (click)="changePayee(p.fm_Name,p.fm_Id)">{{p.fm_Name}}</li>
+            </ul>
+            *If you change bill payer you are automatically added in bill member.
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Group Settlement-->
@@ -122,14 +186,14 @@
         <!--Header-->
         <div class="modal-header text-center hdr">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true" class="white-text" style="color:white">&times;</span>
+            <span aria-hidden="true" class="white-text" style="color:white" #closegs>&times;</span>
           </button>
           <h4 class="modal-title white-text w-100 font-weight-bold py-2">Group Settlement</h4>
         </div>
 
         <!--Body-->
-        <div id="bill-set" class="collapse" >
-          <form #f3="ngForm" (ngSubmit)="GroupSettlement()"  *ngIf="translist">
+        <div id="bill-set" class="collapse">
+          <form #f3="ngForm" (ngSubmit)="GroupSettlement()" *ngIf="translist">
             <div class="modal-body">
 
               <div class="set-mem">
@@ -140,14 +204,14 @@
 
               <div style="height:10px;width:100%"></div>
               <div class="form-group">
-                <i class="fa fa-chevron-left" *ngIf="i>0" (click)="i=i-1" ></i>
+                <i class="fa fa-chevron-left" *ngIf="i>0" (click)="i=i-1"></i>
                 <div class="input-group set-amount">
                   <div class="input-group-addon">
                     <i class="fa fa-rupee" style="font-size:30px"></i>
                   </div>
-                  <input class="form-control validate" style="font-size:30px;height:50px" type="number" id="grpSetAmt" name="grpSetAmt"  [(ngModel)]="translist[i].T_Amount" placeholder="0.00" required #grpSetAmt="ngModel" />
+                  <input class="form-control validate" style="font-size:30px;height:50px" type="number" id="grpSetAmt" name="grpSetAmt" [(ngModel)]="translist[i].T_Amount" placeholder="0.00" required #grpSetAmt="ngModel" />
                 </div>
-                <i class="fa fa-chevron-right"  *ngIf="i<translist.length-1" (click)="i=i+1"></i>
+                <i class="fa fa-chevron-right" *ngIf="i<translist.length-1" (click)="i=i+1"></i>
               </div>
               <!--<div class="error" style="float:right" *ngIf="grpSetAmt.touched && !grpSetAmt.valid">*Amount is Required!</div>-->
             </div>
@@ -158,8 +222,8 @@
           </form>
         </div>
         <div class="modal-footer justify-content-center">
-        <button type="button" class="btn grp-set" (click)="GetSetGroup()" data-toggle="collapse" data-target="#bill-set">Record cash payment</button>
-          </div>
+          <button type="button" class="btn grp-set" (click)="GetSetGroup()" data-toggle="collapse" data-target="#bill-set">Record cash payment</button>
+        </div>
       </div>
 
       <!--/.Content-->
@@ -175,33 +239,119 @@
         <!--Header-->
         <div class="modal-header text-center hdr">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true" class="white-text" style="color:white">&times;</span>
+            <span aria-hidden="true" class="white-text" style="color:white" #closeis>&times;</span>
           </button>
           <h4 class="modal-title white-text w-100 font-weight-bold py-2">Settle up.!!</h4>
         </div>
 
         <!--Body-->
-        <form #f4="ngForm" (ngSubmit)="addGroupBill()">
-          <div class="modal-body">
-            <div class="error" *ngIf="name.touched && !name.valid">*Bill Name is Required!</div>
-            <div class="md-form mb-5">
-              <input type="text" name="name" class="form-control validate" [(ngModel)]="gBill.gb_Name" placeholder="Bill Name" required #name="ngModel">
-            </div>
-            <div style="height:10px;width:100%"></div>
-            <div class="error" *ngIf="amount.touched && !amount.valid">*Bill Amount is Required!</div>
-            <div class="md-form">
-              <input type="number" name="amount" class="form-control validate" [(ngModel)]="gBill.gb_Amount" placeholder="0.00" required #amount="ngModel" />
-            </div>
-          </div>
+        <div id="ibill-set" class="collapse">
+          <form #f4="ngForm" (ngSubmit)="IndividualSettlement()">
+            <div class="modal-body">
 
-          <!--Footer-->
-          <div class="modal-footer justify-content-center">
-            <input type="submit" class="btn btn-outline-warning waves-effect add-bill" [disabled]="!f1.valid" value="Add Bill">
-          </div>
-        </form>
+              <div class="set-mem">
+                <span class="badge b-name">{{iSettle.fS_Payer}}</span>
+                paid
+                <span class="badge b-name">{{iSettle.fS_Receiver}}</span>
+              </div>
+
+              <div style="height:10px;width:100%"></div>
+              <div class="form-group">
+                <div class="input-group set-amount">
+                  <div class="input-group-addon">
+                    <i class="fa fa-rupee" style="font-size:30px"></i>
+                  </div>
+                  <input class="form-control validate" style="font-size:30px;height:50px" type="number" id="indSetAmt" name="indSetAmt" [(ngModel)]="iSettle.amount" placeholder="0.00" required #indSetAmt="ngModel" />
+
+                </div>
+              </div>
+              <!--<div class="error" style="float:right" *ngIf="grpSetAmt.touched && !grpSetAmt.valid">*Amount is Required!</div>-->
+            </div>
+            <!--Footer-->
+            <div class="modal-footer justify-content-center">
+              <input type="submit" class="btn btn-outline-warning waves-effect add-bill" [disabled]="!f4.valid" value="Save Transaction">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn grp-set" (click)="GetSetInd()" data-toggle="collapse" data-target="#ibill-set">Record cash payment</button>
+        </div>
       </div>
       <!--/.Content-->
     </div>
   </div>
+
+  <!--all Settlement-->
+  <div class="modal" id="allSettle"  role="dialog" aria-labelledby="myModalLabel" style="z-index: 1400;" >
+    <div class="modal-dialog modal-notify modal-warning " role="document">
+      <!--Content-->
+      <div class="modal-content bill">
+        <!--Header-->
+        <div class="modal-header text-center hdr">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="white-text" style="color:white" #closeas>&times;</span>
+          </button>
+          <h4 class="modal-title white-text w-100 font-weight-bold py-2">Settle up.!!</h4>
+        </div>
+
+        <!--Body-->
+        <div id="ibill-set">
+          <form #f5="ngForm" (ngSubmit)="IndividualSettlement()">
+            <div class="modal-body">
+
+              <div class="set-mem">
+                <span class="badge b-name">{{iSettle.fS_Payer}}</span>
+                paid
+                <span class="badge b-name">{{iSettle.fS_Receiver}}</span>
+              </div>
+
+              <div style="height:10px;width:100%"></div>
+              <div class="form-group">
+                <div class="input-group set-amount">
+                  <div class="input-group-addon">
+                    <i class="fa fa-rupee" style="font-size:30px"></i>
+                  </div>
+                  <input class="form-control validate" style="font-size:30px;height:50px" type="number" id="indSetAmt" name="indSetAmt" [(ngModel)]="iSettle.amount" placeholder="0.00" required #indSetAmt="ngModel" />
+
+                </div>
+              </div>
+
+            </div>
+            <!--Footer-->
+            <div class="modal-footer justify-content-center">
+              <input type="submit" class="btn btn-outline-warning waves-effect add-bill" [disabled]="!f5.valid" value="Save Transaction">
+            </div>
+          </form>
+        </div>
+      </div>
+      <!--/.Content-->
+    </div>
+  </div>
+
+  <!--Select Friend for settlement-->
+  <div class="modal fade" tabindex="-1" id="selectPayee" aria-hidden="true" style="z-index: 1200;" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog sPayee">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header text-center hdr">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="white-text" style="color:white" #closefl>&times;</span>
+          </button>
+          <h4 class="modal-title white-text w-100 font-weight-bold py-2">Select Friend for Settlement</h4>
+        </div>      
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <ul class="list-group" *ngFor="let p of friends">
+            <li role="button" class="list-group-item payee-list" data-toggle="modal" (click)="GetSetFrd(p.fm_Name,p.fm_Id)" data-target="#allSettle">{{p.fm_Name}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
 </body>
 </html>

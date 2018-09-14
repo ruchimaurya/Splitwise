@@ -53,7 +53,6 @@ namespace Splitwise.Repository
                 bmem.Bm_Paidfor=bm[i];
                 context.BillMembers.Add(bmem);
                 context.Transactions.Add(temp);
-
             }
 
             //add activity
@@ -62,7 +61,6 @@ namespace Splitwise.Repository
             act.A_Description = "Added Bill " + model.Ib_Name;
             act.A_Date = dt;
             context.Activities.Add(act);
-
             var res = context.SaveChanges();
             return res;
         }
@@ -110,6 +108,25 @@ namespace Splitwise.Repository
                 res = context.SaveChanges();
             }
             return res;
+        }
+
+        public IEnumerable<BillInformation> GetFriendsBills(int uid, int fid)
+        {
+            var model = new List<BillInformation>();
+            var um = context.BillMembers.Where(b => b.Bm_Paidfor == uid).Select(b => b.Bm_BillId).ToList();
+            var fm= context.BillMembers.Where(b => b.Bm_Paidfor == fid).Select(b => b.Bm_BillId).ToList();
+            var ub = context.IndividualBills.Where(b => b.Ib_PaidBy == uid).Select(b => b.Ib_Id).ToList();
+            var fb = context.IndividualBills.Where(b => b.Ib_PaidBy == fid).Select(b => b.Ib_Id).ToList();
+            var b1 = um.Intersect(fb);
+            var b2 = fm.Intersect(ub);
+            var bill = b1.Union(b2);
+            foreach(var i in bill)
+            {
+                var temp = GetIndividualBillInfo(i);
+                model.Add(temp);                
+            }
+
+            return model;
         }
     }
 }

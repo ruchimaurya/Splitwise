@@ -60,6 +60,14 @@ namespace Splitwise.Controllers
             }
             return Forbid();
         }
+   
+        [Route("api/friendsbills/{uid}/{fid}")]
+        [HttpGet]
+        public IEnumerable<BillInformation> GetFriendsBills(int uid, int fid)
+        {
+            var res = _iBillRepo.GetFriendsBills(uid,fid);
+            return res;
+        }
 
     }
 }

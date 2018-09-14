@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import { race } from 'q';
 
 @Injectable()
 export class GroupsService {
@@ -14,6 +15,12 @@ export class GroupsService {
   
   getGroupMembers(id: any) {
     return this.http.get('api/friends/' + id)
+      .map(res => res.json());
+  }
+
+  getGroupMembersList() {
+    console.log('gid', this.gid);
+    return this.http.get('api/groupmembers/' + this.gid)
       .map(res => res.json());
   }
   getIndividualGroupMembers(id: any) {
@@ -65,4 +72,25 @@ export class GroupsService {
     return this.http.post('/api/transactions/', gtrans)
       .map(r => r.json());
   }
+
+  EditGroupInfo(gid:any,grp: any) {
+    return this.http.put('api/groups/' + gid, grp)
+      .map(res => res.json());
+  }
+
+  DeleteGroup(gid: any) {
+    return this.http.delete('api/groups/' + gid)
+      .map(res => res.json());
+  }
+
+  DeleteGroupMember(gid: any, mid: any) {
+    return this.http.delete('api/groupmembers/' + gid + '/' + mid)
+      .map(res => res.json());
+  }
+
+  GetGroupsAllTransactions(gid: any) {
+    return this.http.get('api/transactions/groups/' + gid)
+      .map(res => res.json());
+  }
+
 }

@@ -1,4 +1,4 @@
-<body *ngIf="settle&&group">
+<body *ngIf="settle&&group&&gTrans">
   <div class="row" style="display: flex;background-color: #E2E0E4;">
     <div class="col-sm-9 nav-body">
       <div style="height:50px;width:100%"></div>
@@ -13,7 +13,7 @@
         <span>{{group.gi_Date |  date: 'dd MMMM, yyyy'}}</span>
       </div>
       <div style="height:20px;width:100%"></div>
-
+      <!--group bills-->
       <ul class="list-group list-group-flush" *ngIf="group.gi_Bills.length>0">
         <li class="list-group-item trans" *ngFor="let b of group.gi_Bills">
           <input type="hidden" value="{{b.bI_Id}}" name="bid" #bid />
@@ -21,7 +21,7 @@
           <a class="menu-content gb-name" (click)="BillInfo(bid)" data-toggle="collapse" href="#{{b.bI_Id}}">
             {{b.bI_Name}}
           </a>
-          <span class="b-amount">Amount: {{b.bI_Amount | currency:'INR'}}</span>
+          <span class="b-amount">{{b.bI_PaidBy}} paid {{b.bI_Amount | currency:'INR'}}</span>
           <!--Bill Information-->
           <div id="{{b.bI_Id}}" class="collapse">
             <div class="container">
@@ -38,6 +38,16 @@
         </li>
       </ul>
 
+      <ul class="list-group" *ngIf="gTrans">
+        <li class="list-group-item acts" *ngFor="let x of gTrans">
+          <span class="badge">  {{x.fT_Date|date:'dd'}}<br />{{x.fT_Date|date:'LLL'}} </span>
+          <div style="margin-left:50px">
+            <b>{{x.fT_PaidBy}}</b>  paid <b>{{x.fT_ReceivedByFriend}}</b>
+            <span>{{ x.fT_Amount|currency:'INR'}}</span>
+          </div>         
+        </li>
+      </ul>
+
     </div>
     <div class="col-sm-3 left-panel">
       <div style="height:50px;width:100%"></div>
@@ -49,7 +59,8 @@
         <h4>Group Members</h4>
         <div *ngFor="let gm of group.gi_Members">
           <span class='glyphicon glyphicon-user'></span>
-          {{gm}} <i class="fa fa-close cross" title="Remove member!"></i>
+          {{gm}}
+          <!--<i class="fa fa-close cross" title="Remove member!"></i>-->
           <div *ngFor="let set of settle">
             <div *ngIf="gm===set.gs_PayerName">
               <div *ngIf="set.gs_Amount>0" style="color:green;margin-left:20px;">gets back {{set.gs_Amount | currency:'INR'}}</div>

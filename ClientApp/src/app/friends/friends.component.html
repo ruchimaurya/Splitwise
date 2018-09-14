@@ -9,7 +9,7 @@
         </div>
 
         <button type="button" class="btn btn-default" id="add-bill-btn" data-toggle="modal" data-target="#addFriendBill">Add Bill</button>
-        <button type="button" class="btn btn-default" id="settle-btn" data-toggle="modal" data-target="#FriendSettle">Settle up</button>
+        <button type="button" class="btn btn-default" id="settle-btn" (click)="getSettle()" data-toggle="modal" data-target="#FriendSettle">Settle up</button>
       </nav>
 
       <!--Common Groups-->
@@ -17,7 +17,7 @@
         <li class="list-group-item trans" *ngFor="let b of fSettle.fS_GSettle">
           <input type="hidden" value="{{b.gsM_Gid}}" name="bid" #bid />
           <span class="badge"> com <br />grp</span>
-          <a class="menu-content gb-name"  [routerLink]='["../../groups/",b.gsM_Gid]'>
+          <a class="menu-content gb-name" [routerLink]='["../../groups/",b.gsM_Gid]'>
             {{b.gsM_Groupname}}
           </a>
           <span class="b-amount" *ngIf="b.gsM_Amount<0" [ngStyle]="{'color':'red'}">You owe {{b.gsM_Amount*(-1) | currency:'INR'}} {{friend.fm_Name}}</span>
@@ -25,13 +25,39 @@
         </li>
       </ul>
 
+      <!--comman Bills-->
+      <ul class="list-group list-group-flush" *ngIf="fBills">
+        <li class="list-group-item trans" *ngFor="let b of fBills">
+          <input type="hidden" value="{{b.bI_Id}}" name="bid" #bid />
+          <span class="badge"> {{b.bI_Date|date:'dd'}}<br />{{b.bI_Date|date:'LLL'}}</span>
+          <a class="menu-content gb-name" (click)="BillInfo(bid)" data-toggle="collapse" href="#{{b.bI_Id}}">
+            {{b.bI_Name}}
+          </a>
+          <span class="b-amount">{{b.bI_PaidBy}} paid {{b.bI_Amount | currency:'INR'}}</span>
+          <!--Bill Information-->
+          <div id="{{b.bI_Id}}" class="collapse">
+            <div class="container">
+              <ul>
+                <li> {{b.bI_PaidBy}} paid {{b.bI_Amount | currency:'INR'}} and owes {{(b.bI_Amount/(b.bI_PaidFor.length+1))| currency:'INR'}} </li>
+              </ul>
+              <ul *ngFor="let m of b.bI_PaidFor">
+                <li *ngIf="m!=b.bI_PaidBy">
+                  {{m}} owes {{(b.bI_Amount/(1+b.bI_PaidFor.length))| currency:'INR'}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
 
+      <!--Friends Transactions-->
       <div>
         <ul class="list-group" *ngIf="trans.length>0">
           <li class="list-group-item acts" *ngFor="let t of trans">
             <span class="badge">  {{t.fT_Date|date:'dd'}}<br />{{t.fT_Date|date:'LLL'}} </span>
             <div class="activity">
-              {{t.fT_PaidBy}} paid {{t.fT_ReceivedByFriend}} {{t.fT_Amount|currency:'INR'}}
+              <b>{{t.fT_PaidBy}}</b>  paid <b>{{t.fT_ReceivedByFriend}}</b> {{t.fT_Amount|currency:'INR'}}
+              <span *ngIf="t.fT_ReceivedByGroup!=null"> in <b>{{t.fT_ReceivedByGroup}}</b></span>
             </div>
           </li>
         </ul>
@@ -39,14 +65,22 @@
     </div>
     <div class="col-sm-3 left-panel">
       <div style="height:50px;width:100%"></div>
-      <div *ngIf="fAmount>0">
-        <div>{{friend.fm_Name}} owes you</div>
-        <div style="color:green">{{fAmount| currency:'INR'}}</div>
+
+      <button type="button" class="btn btn-default" id="setting-btn" title="Remove Friend" (click)="RemoveFriend()">
+        <span class="glyphicon glyphicon-trash"></span>
+      </button>
+
+      <div class="final-amount">        
+        <div style="color:green" *ngIf="fAmount>0">
+          <div>{{friend.fm_Name}} owes you</div>
+          <div style="font-size:24px;">{{fAmount| currency:'INR'}}</div>
+        </div>
+        <div style="color:red" *ngIf="fAmount<0">
+          <div>You owe {{friend.fm_Name}}</div>
+          <div style="font-size:24px;">{{fAmount*(-1)| currency:'INR'}}</div>
+        </div>
       </div>
-      <div *ngIf="fAmount<0">
-        <div>You owe {{friend.fm_Name}}</div>
-        <div style="color:red">{{fAmount*(-1)| currency:'INR'}}</div>
-      </div>
+
     </div>
    </div>
 </body>

@@ -13,5 +13,6 @@ namespace Splitwise.Repository
         int AddBillMember(BillMember bm);
         BillInformation GetIndividualBillInfo(int id);
         int DeleteIndividualBill(int id);
+        IEnumerable<BillInformation> GetFriendsBills(int uid, int fid);
     }
 }

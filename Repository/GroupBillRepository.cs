@@ -87,7 +87,7 @@ namespace Splitwise.Repository
 
         public IEnumerable<GroupBills> GetIndividualGroupBills(int id)
         {
-            var gBill = context.GroupBills.Where(b => b.Gb_ForGroup == id).ToList();
+            var gBill = context.GroupBills.Where(b => b.Gb_ForGroup == id).OrderByDescending(b=>b.Gb_Id).ToList();
             return gBill;
         }
 

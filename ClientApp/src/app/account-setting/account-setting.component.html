@@ -7,7 +7,7 @@
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" id="title-tag" href="#">SPLITWISE</a>
+        <a class="navbar-brand" id="title-tag" href="#" [routerLink]='["../../home/"+uid]'>SPLITWISE</a>
       </div>
      
     </div>
@@ -38,10 +38,39 @@
           <input class="form-control" id="email" name="email" type="email" placeholder="Enter your Email" [(ngModel)]="user.u_Email" required #email="ngModel" />
         </div>
       </div>
-      <input name="password" type="hidden"[(ngModel)]="user.u_Password"/>
+
+      <div class="form-group" *ngIf="cno!=null">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <span class="glyphicon glyphicon-earphone"></span>
+          </div>
+          <input class="form-control" id="contact" name="contact" type="number" placeholder="Enter your Mobile no" [(ngModel)]="user.u_Contact" #contact="ngModel" />
+        </div>
+      </div>
+
+      <input name="password" type="hidden" [(ngModel)]="user.u_Password" />
+
+      <div class="form-group" *ngIf="cno==null">
+        <div class="input-group">
+          <a role="button" class="edit-pwd" data-toggle="collapse" data-target="#addMob">
+            Add Mobile<span class="glyphicon glyphicon-pencil"></span>
+          </a>
+        </div>
+      </div>
+      <div id="addMob" class="collapse">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon">
+              <span class="glyphicon glyphicon-earphone"></span>
+            </div>
+            <input class="form-control" id="contact" name="contact" type="number" placeholder="Enter your Mobile no" [(ngModel)]="user.u_Contact" #contactno="ngModel" />
+          </div>
+        </div>
+      </div>
+
       <div class="form-group">
         <div class="input-group">
-          <a class="edit-pwd" data-toggle="collapse" data-target="#pwd">
+          <a role="button" class="edit-pwd" data-toggle="collapse" data-target="#pwd">
             Edit Password<span class="glyphicon glyphicon-pencil"></span>
           </a>
         </div>
@@ -53,7 +82,7 @@
             <div class="input-group-addon">
               <span class="glyphicon glyphicon-pencil"></span>
             </div>
-            <input class="form-control" name="passwordo" type="password" placeholder="Current Password" [(ngModel)]="oldpwd"  #passwordo="ngModel" />
+            <input class="form-control" name="passwordo" type="password" placeholder="Current Password" [(ngModel)]="oldpwd" #passwordo="ngModel" />
           </div>
         </div>
         <div class="form-group">
@@ -61,7 +90,7 @@
             <div class="input-group-addon">
               <span class="glyphicon glyphicon-pencil"></span>
             </div>
-            <input class="form-control" name="passwordn" type="password" placeholder="New Password" [(ngModel)]="newpwd"  #passwordn="ngModel" />
+            <input class="form-control" name="passwordn" type="password" placeholder="New Password" [(ngModel)]="newpwd" #passwordn="ngModel" />
           </div>
         </div>
       </div>

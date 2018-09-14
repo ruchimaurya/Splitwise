@@ -98,7 +98,7 @@ namespace Splitwise.Repository
             var groups = new List<Groups>();
             var gm = context.GroupMembers.Where(b => b.Gm_Member == id).ToList();
             for (int i = 0; i < gm.Count; i++)
-                groups.Add(context.Groups.FirstOrDefault(b => b.G_Id == gm[i].GM_GroupId));
+                groups.Add(context.Groups.FirstOrDefault(b => b.G_Id == gm[i].GM_GroupId && b.G_Deleted==false));
             return groups;
         }
 

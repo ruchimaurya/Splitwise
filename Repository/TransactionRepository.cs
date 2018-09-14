@@ -10,8 +10,7 @@ namespace Splitwise.Repository
 {
     public class TransactionRepository : ITransactionRepository
     {
-        private readonly SplitwiseDbContext context;
-        double auid = 0, afid = 0;
+        private readonly SplitwiseDbContext context;        
 
         public TransactionRepository(SplitwiseDbContext context)
         {
@@ -46,7 +45,7 @@ namespace Splitwise.Repository
         public IEnumerable<FriendTransactionModel> GetIndividualTransactions(int uid,int fid)
         { 
             var model = new List<FriendTransactionModel>();
-            var trans = context.Transactions.Where(b=>(b.T_ReceivedByFriend==fid && b.T_PaidBy==uid)|| (b.T_ReceivedByFriend == uid && b.T_PaidBy == fid)).ToList();
+            var trans = context.Transactions.Where(b=>(b.T_ReceivedByFriend==fid && b.T_PaidBy==uid)|| (b.T_ReceivedByFriend == uid && b.T_PaidBy == fid)).OrderByDescending(b=>b.T_Id).ToList();
             foreach(var i in trans)
             {
                 var temp = new FriendTransactionModel();
@@ -115,14 +114,15 @@ namespace Splitwise.Repository
 
         public FriendSettlementModel GetSettlementIndividual(int uid, int fid)
         {
+            double auid = 0, afid = 0;
             var model = new FriendSettlementModel();
             var gsmList = new List<GSModel>();
             double amount = 0;
-            var trans = context.Transactions.Where(i=>(i.T_PaidBy==uid&&i.T_ReceivedByFriend==fid)|| (i.T_PaidBy == fid && i.T_ReceivedByFriend == uid)).ToList();
+            var trans = context.Transactions.Where(i=>((i.T_PaidBy==uid&&i.T_ReceivedByFriend==fid)|| (i.T_PaidBy == fid && i.T_ReceivedByFriend == uid)) && i.T_ReceivedByGroup == null).ToList();
             var ug = context.GroupMembers.Where(i => i.Gm_Member == uid).Select(i=>i.GM_GroupId).ToList();
             var fg = context.GroupMembers.Where(i => i.Gm_Member == fid).Select(i=>i.GM_GroupId).ToList();
             var cg = ug.Intersect(fg).ToList();
-            var setg = new List<List<GroupSettlementModel>>();
+            var setg = new List<List<GroupSettlementModel>>();         
 
             //gets settlement of common groups
             foreach (var i in cg)           
@@ -133,28 +133,31 @@ namespace Splitwise.Repository
             foreach (var i in setg)
             {
                 var gsm = new GSModel();
-                var grp = context.Groups.SingleOrDefault(k=>k.G_Id==cg[count]);
-                gsm.GSM_Gid = grp.G_Id;
-                gsm.GSM_Groupname = grp.G_Name;
-                
-                var u = i.Find(e => e.Gs_PayerId == uid);
-                var f = i.Find(e => e.Gs_PayerId == fid);
-                if ((u.Gs_Amount > 0 && f.Gs_Amount < 0) || (u.Gs_Amount < 0 && f.Gs_Amount > 0))
+                var grp = context.Groups.SingleOrDefault(k=>k.G_Id==cg[count]&&k.G_Deleted==false);
+                if (grp != null)
                 {
-                    if (u.Gs_Amount > f.Gs_Amount)
+                    gsm.GSM_Gid = grp.G_Id;
+                    gsm.GSM_Groupname = grp.G_Name;
+
+                    var u = i.Find(e => e.Gs_PayerId == uid);
+                    var f = i.Find(e => e.Gs_PayerId == fid);
+                    if ((u.Gs_Amount > 0 && f.Gs_Amount < 0) || (u.Gs_Amount < 0 && f.Gs_Amount > 0))
                     {
-                        var temp = ((u.Gs_Amount) > (f.Gs_Amount * (-1))) ? (f.Gs_Amount*(-1)) : (u.Gs_Amount);
-                        gsm.GSM_Amount = temp;
-                        // auid = auid + temp;
+                        if (u.Gs_Amount > f.Gs_Amount)
+                        {
+                            var temp = ((u.Gs_Amount) > (f.Gs_Amount * (-1))) ? (f.Gs_Amount * (-1)) : (u.Gs_Amount);
+                            gsm.GSM_Amount = temp;
+                            // auid = auid + temp;
+                        }
+                        else
+                        {
+                            var temp = ((u.Gs_Amount * (-1)) <= (f.Gs_Amount)) ? (u.Gs_Amount * (-1)) : (f.Gs_Amount);
+                            gsm.GSM_Amount = temp * (-1);
+                            //  afid = afid + temp;
+                        }
                     }
-                    else
-                    {
-                        var temp = ((u.Gs_Amount * (-1)) <= (f.Gs_Amount)) ? (u.Gs_Amount * (-1)) : (f.Gs_Amount);
-                        gsm.GSM_Amount = temp*(-1);
-                        //  afid = afid + temp;
-                    }
-                }
-                gsmList.Add(gsm);
+                    gsmList.Add(gsm);
+                }               
                 count++;
             }
            
@@ -168,15 +171,26 @@ namespace Splitwise.Repository
             amount = auid - afid;
             model.FS_GSettle = gsmList;
             model.FS_iAmount = amount;
+            var sum = amount + model.FS_GSettle.Sum(i=>i.GSM_Amount);
+            if (sum > 0)
+            {
+                model.FS_Receiver = context.Users.Where(i => i.U_Id == uid).Select(i => i.U_Name).ToList()[0];
+                model.FS_Payer = context.Users.Where(i => i.U_Id == fid).Select(i => i.U_Name).ToList()[0];
+
+            }
+            else
+            {
+                model.FS_Payer = context.Users.Where(i => i.U_Id == uid).Select(i => i.U_Name).ToList()[0];
+                model.FS_Receiver = context.Users.Where(i => i.U_Id == fid).Select(i => i.U_Name).ToList()[0];
+            }
 
             return model;
         }
 
         public IEnumerable<Transactions> GetUsersAllTransactions(int id)
         {
-            var trans = context.Transactions.Where(t => t.T_PaidBy == id || t.T_ReceivedByFriend == id).ToList();
+            var trans = context.Transactions.Where(t => t.T_PaidBy == id || t.T_ReceivedByFriend == id).OrderByDescending(t=>t.T_Id).ToList();
             return trans;
-
         }
 
         public IEnumerable<GroupSettlementModel> GetSettlementGroup(int id)

@@ -1,10 +1,6 @@
-height{
-  height:100%;
-}
-body{
-  min-height:100%;
-  background-color: #E2E0E4;
-  position:relative;
+
+.main-body{
+  background-color:#D8D5DB;
 }
 .title-bar{
   background-color:#C5C0CA;
@@ -14,8 +10,7 @@ body{
   color:#2B193D;
 }
 
-.right-panel{
-    background-color: #D8D5DB;
+.right-panel{   
     min-height:100vh;
     height: 100%;
 }
@@ -34,4 +29,8 @@ body{
 }
 .acts{
   background: #D8D5DB;
+}
+
+.nav-body{
+  background-color:#E2E0E4;
 }

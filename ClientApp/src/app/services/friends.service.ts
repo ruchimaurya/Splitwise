@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 export class FriendsService {
 
   constructor(private http: Http) { }
-
+  fid: any;
   getFriend(fid: any) {
     return this.http.get("/api/friend/" + fid)
       .map(res => res.json());
@@ -43,6 +43,31 @@ export class FriendsService {
 
   getIndividualSettlement(uid: any, fid: any) {
     return this.http.get('api/transactions/friends/settlement/' + uid + '/' + fid)
+      .map(res => res.json());
+  }
+  getIndividualSettlementModal(uid: any) {
+    var fid = this.fid;
+    return this.http.get('api/transactions/friends/settlement/' + uid + '/' + fid)
+      .map(res => res.json());
+  }
+
+  postIndividualSettle(trans: any) {
+    if (trans.T_ReceivedByFriend == null)
+      trans.T_ReceivedByFriend = this.fid;
+    else if (trans.T_PaidBy == 0)
+      trans.T_PaidBy = this.fid;
+    console.log('fs model', trans);
+    return this.http.post('/api/transactions/', trans)
+      .map(res => res.json());
+  }
+
+  getFriendsBills(uid: any, fid: any) {
+    return this.http.get('api/friendsbills/' + uid + '/' + fid)
+      .map(res => res.json());
+  }
+
+  RemoveFriend(uid: any, fid: any) {
+    return this.http.delete('api/friends/' + uid + '/' + fid)
       .map(res => res.json());
   }
 }

@@ -22,7 +22,7 @@ body{
 }
 
 .nav-body{
-   background-color:#E2E0E4;
+    /*background: #E2E0E4;*/
    min-height:100vh;
    z-index:10;
 }
@@ -44,6 +44,7 @@ body{
    background-color:#2B193D;
    color: white;
   font-size:20px;
+  height:50px;
 }
 
  .add-bill ,.grp-set{
@@ -84,3 +85,53 @@ body{
     position: fixed;   
     margin: -40px 310px;
  }
+
+ .payer{
+   height:60px;
+ }
+
+ .payee{
+   background-color:#C5C0CA;
+   border:dashed 1px #514260;
+   color:#2B193D;
+   font-size:16px;
+   margin:0 auto;
+ }
+
+ .payee-con{
+    background: #D8D5DB;
+    width: 35%;
+    margin: 90px 510px;
+}
+
+ .payee-list{
+   background-color:#C5C0CA;
+ }
+
+.list-group {
+    padding-left: 0;
+    margin-bottom: 0;
+    color:#2B193D;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.cPayee{
+    margin: 45px 900px;
+    width: 18%;
+}
+
+.sPayee{
+   min-width: 283px;
+   width:21%;
+}
+
+.close-icn{
+      color: white;
+    float: right;
+    margin: -25px -5px;
+}
+
+.modal-content {
+    overflow-y: initial;
+}

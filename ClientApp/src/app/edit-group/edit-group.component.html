@@ -21,7 +21,7 @@
           <div *ngFor="let gm of gmem">
             <span class='glyphicon glyphicon-user'></span>
             <input type="hidden" value="{{gm.m_MemberId}}" [(ngModel)]="gm.m_MemberId" name="{{gm.m_MemberId}}" #mid="ngModel" />
-            <a>{{gm.m_Name}} <i class="fa fa-close cross" role="button" (click)="RemoveMember(mid.value)" title="only Group admin can Remove member!"></i></a>
+            <a>{{gm.m_Name}} <i class="fa fa-close cross" role="button" (click)="RemoveMember(mid.value)" title="Remove member!"></i></a>
           </div>
           <a class="add-mem" data-toggle="collapse"  data-target="#add">Add Member</a>
           <div id="add" class="collapse">

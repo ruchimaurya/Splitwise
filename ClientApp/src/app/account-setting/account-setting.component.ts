@@ -14,25 +14,42 @@ export class AccountSettingComponent implements OnInit {
     private usersService: UsersService) { }
   
   user = {
-    u_Password:''
+    u_Password: '',
+    u_Contact:''
   };
   oldpwd: any;
   newpwd: any;
   uid = this.route.snapshot.params['uid'];
+  cno: any;
 
   ngOnInit() {
     this.usersService.getUser(this.uid)
       .subscribe(u => {
         this.user = u;
-        console.log(this.user);      
+        console.log(this.user);
+        this.cno = this.user.u_Contact;
       });
   }
 
   settings() {
     console.log(this.user.u_Password);
-    if (this.user.u_Password === this.oldpwd) {
-      console.log('pwd match', this.user.u_Password, this.oldpwd);
-      this.user.u_Password = this.newpwd;
+    if (this.oldpwd != null) {
+      if (this.user.u_Password === this.oldpwd) {
+        console.log('pwd match', this.user.u_Password, this.oldpwd);
+        this.user.u_Password = this.newpwd;
+        console.log('final', this.user);
+        this.usersService.updateUser(this.uid, this.user)
+          .subscribe(u => {
+            console.log('updated succesfully', u);
+            alert('User Profile updated.!!');
+            this.router.navigate(['../../home/', this.uid]);
+          });
+      }
+      else {
+        alert("password does not match!! Try Again...");
+      }
+    }
+    else {
       console.log('final', this.user);
       this.usersService.updateUser(this.uid, this.user)
         .subscribe(u => {
@@ -40,10 +57,6 @@ export class AccountSettingComponent implements OnInit {
           alert('User Profile updated.!!');
           this.router.navigate(['../../home/', this.uid]);
         });
-    }
-    else {
-      alert("Current password does not match!! Try Again...");
-    }
-   
+    }  
   }
 }

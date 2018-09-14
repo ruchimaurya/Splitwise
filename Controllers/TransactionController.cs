@@ -61,7 +61,7 @@ namespace Splitwise.Controllers
                 return Ok(res);
             }
             return Forbid();
-        }
+        }      
 
         [Route("api/transactions/{id}")]
         [HttpDelete]

@@ -12,5 +12,7 @@ namespace Splitwise.Models
         public int GM_GroupId { get; set; }
 
         public int Gm_Member { get; set; }
+
+        public bool Gm_Deleted { get; set; }
     }
 }

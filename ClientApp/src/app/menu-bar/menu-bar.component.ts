@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from '../services/users.service';
 import { FriendsService } from '../services/friends.service';
+import { ViewChild, ElementRef } from '@angular/core';
 import { log } from 'util';
 
 @Component({
@@ -10,6 +11,8 @@ import { log } from 'util';
   styleUrls: ['./menu-bar.component.css']
 })
 export class MenuBarComponent implements OnInit {
+
+  @ViewChild('closeaf') closeaf: ElementRef;
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -62,6 +65,8 @@ export class MenuBarComponent implements OnInit {
                     alert(' added as friend.!!');                   
                   });
               }
+              this.closeaf.nativeElement.click();
+              location.reload();
             });                   
         }
         else {          
@@ -74,6 +79,7 @@ export class MenuBarComponent implements OnInit {
             .subscribe(i => {
               console.log(i);
               alert('user doesnot exist invitation sent.!!');
+              this.closeaf.nativeElement.click();
             });
          
         }

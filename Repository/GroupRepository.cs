@@ -112,7 +112,8 @@ namespace Splitwise.Repository
             var gm = context.GroupMembers.FirstOrDefault(b => b.GM_GroupId == gid && b.Gm_Member==mid);
             if (gm != null)
             {
-                context.GroupMembers.Remove(gm);
+                gm.Gm_Deleted = true;
+                context.GroupMembers.Update(gm);
                 res = context.SaveChanges();
             }
             return res;
@@ -151,7 +152,7 @@ namespace Splitwise.Repository
             GInfo.Gi_Date = grp.G_Date;
             var tempAdm = context.Users.Where(i => i.U_Id == grp.G_Admin).Select(i => i.U_Name).ToList();
             GInfo.Gi_Admin = tempAdm[0];                
-            var gm=context.GroupMembers.Where(g => g.GM_GroupId == id).Select(g => g.Gm_Member).ToList();
+            var gm=context.GroupMembers.Where(g => g.GM_GroupId == id&&g.Gm_Deleted==false).Select(g => g.Gm_Member).ToList();
                       
             var gmem = context.GroupMembers.Where(m => m.GM_GroupId == id).Select(m=>m.Gm_Member).ToList();
             var memList = new List<string>();
@@ -161,7 +162,7 @@ namespace Splitwise.Repository
             }
             GInfo.Gi_Members = memList;
 
-            var gb = context.GroupBills.Where(b=>b.Gb_ForGroup==id).Select(b=>b.Gb_Id).ToList();
+            var gb = context.GroupBills.Where(b=>b.Gb_ForGroup==id).OrderByDescending(b=>b.Gb_Id).Select(b=>b.Gb_Id).ToList();
             var billList = new List<BillInformation>();
             foreach (var b in gb)
             {
