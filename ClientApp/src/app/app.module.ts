@@ -7,13 +7,10 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
-import { SettlementBarComponent } from './settlement-bar/settlement-bar.component';
 import { UsersService } from './services/users.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { GroupsComponent } from './groups/groups.component';
@@ -30,14 +27,11 @@ import { EditGroupComponent } from './edit-group/edit-group.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
-    CounterComponent,
-    FetchDataComponent,
+    NavMenuComponent,  
     LoginComponent,
     RegisterComponent,
     HomePageComponent,
-    MenuBarComponent,
-    SettlementBarComponent,
+    MenuBarComponent,   
     DashboardComponent,
     GroupsComponent,
     FriendsComponent,
@@ -70,8 +64,7 @@ import { EditGroupComponent } from './edit-group/edit-group.component';
       },
       { path: 'registration', component: RegisterComponent },
       { path: ':uid/groups/:gid/edit', component: EditGroupComponent },
-      { path: 'settings/:uid', component: AccountSettingComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'settings/:uid', component: AccountSettingComponent },    
       { path: '**', component: LoginComponent }
     ])
   ],
