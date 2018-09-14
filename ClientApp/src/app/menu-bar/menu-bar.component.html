@@ -25,27 +25,26 @@
       <span class='glyphicon glyphicon-plus'></span>add
     </a>
   </div>
-  <div class="container" style="width:100%">
+  <!--<div class="container" style="width:100%">-->
     <div *ngFor="let g of groups">
-      <a  *ngIf="g!=null" class="menu-content" [routerLink]='["groups/",g.g_Id]'>
+      <a *ngIf="g!=null" class="menu-content grp" [routerLink]='["groups/",g.g_Id]'>
         <span class='glyphicon glyphicon-tag'></span>
         {{g.g_Name}}
       </a>
     </div>
-  </div>
+  <!--</div>-->
 
   <div class="menu-hdr">
     FRIENDS
     <a style="float:right;color:#2B193D" href="#"  onclick="return false;" title="Add Friend!" data-toggle="modal" data-target="#AddFriend"><span class='glyphicon glyphicon-plus' ></span>add</a>
   </div>
-  <div class="container" style="width:100%">
+ 
     <div *ngFor="let f of friends">   
-      <a class="menu-content" [routerLink]='["friends/",f.fm_Id]'>
+      <a class="menu-content mem" [routerLink]='["friends/",f.fm_Id]'>
         <span class='glyphicon glyphicon-user'></span>
         {{f.fm_Name}}
       </a>
     </div>
-  </div>
 
   <div>
     <!--<button type="button" class="btn btn-default" id="add-bill-btn" data-toggle="modal" data-target="#myModal">Add Bill</button>-->

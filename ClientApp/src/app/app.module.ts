@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomePageComponent } from './home-page/home-page.component';
@@ -27,7 +26,6 @@ import { EditGroupComponent } from './edit-group/edit-group.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,  
     LoginComponent,
     RegisterComponent,
     HomePageComponent,

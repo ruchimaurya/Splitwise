@@ -11,6 +11,7 @@
     text-decoration: none;
     text-align:left;
     height:100%;
+
 }
 
 .menu-hdr{
@@ -42,4 +43,11 @@
     background-color: #514260;
     color: white;
     font-size: 15px;
+}
+
+.grp,.mem{
+  padding: 0 15px;
+  height:25px;
+  line-height:25px;
+
 }
